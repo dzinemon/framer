@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import "./FramerBasic.css";
 
 export function FramerBasic() {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<div className="wrapper">
@@ -28,6 +28,7 @@ export function FramerBasic() {
 						<motion.div
 							key={item}
 							className="item"
+							// initial={false}
 							custom={index}
 							onClick={() => {
 								if (isOpen) {

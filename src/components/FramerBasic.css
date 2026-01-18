@@ -27,6 +27,7 @@
 	.button {
 		padding: 4px 6px;
 		background-color: var(--primary-color);
+		color: var(--bg-color);
 		border: none;
 		border-radius: 9999px;
 		cursor: pointer;
@@ -57,4 +58,5 @@
 	border-radius: 20px; /* Controls the size of the corner area */
 	corner-shape: squircle;
 	border: 1px solid var(--border-color);
+	background-color: var(--card-bg);
 }
