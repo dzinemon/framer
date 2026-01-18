@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { motion } from "motion/react";
+import { useState } from "react";
 import "./FramerBasic.css";
 
 export function FramerBasic() {

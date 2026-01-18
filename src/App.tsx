@@ -1,7 +1,8 @@
 import "./App.css";
-import { ThemeToggle } from "./components/ThemeToggle";
-import { FramerBasic } from "./components/FramerBasic";
 import { FirstItem } from "./components/FirstItem";
+import { FramerBasic } from "./components/FramerBasic";
+import { FramerWrap } from "./components/FramerWrap";
+import { ThemeToggle } from "./components/ThemeToggle";
 
 function App() {
 	return (
@@ -9,6 +10,7 @@ function App() {
 			<ThemeToggle />
 			<FirstItem />
 			<FramerBasic />
+			<FramerWrap />
 		</>
 	);
 }

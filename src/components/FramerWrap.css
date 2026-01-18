@@ -1,0 +1,35 @@
+.framer-wrap {
+	gap: 8px;
+	max-width: 640px;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: start;
+	min-height: 100vh;
+	background-color: var(--button-hover-bg);
+	color: var(--text);
+	padding: 20px;
+}
+
+.framer-stiky-bar {
+	position: sticky;
+	top: 0;
+	height: 4px;
+	width: 100%;
+	background-color: var(--secondary-color);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	z-index: 10;
+}
+
+.framer-content {
+	background: var(--card-bg);
+	border: 1px solid var(--border-color);
+	border-radius: 16px;
+	corner-shape: squircle;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	width: 22%;
+	aspect-ratio: 1 / 1;
+}
