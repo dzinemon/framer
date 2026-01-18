@@ -1,0 +1,60 @@
+.basic {
+	width: 64px;
+	height: 64px;
+	background-color: var(--primary-color);
+	border-radius: 8px;
+	display: flex;
+	cursor: pointer;
+}
+
+.wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	padding: 16px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.text {
+		font-size: 18px;
+	}
+
+	.button {
+		padding: 4px 6px;
+		background-color: var(--primary-color);
+		border: none;
+		border-radius: 9999px;
+		cursor: pointer;
+		font-size: 14px;
+		letter-spacing: 0.5px;
+		width: 80px;
+	}
+}
+
+.panel {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 100%;
+	max-width: 320px;
+}
+
+.body {
+	display: flex;
+	width: 100%;
+	gap: 8px;
+	flex-direction: column;
+}
+
+.item {
+	padding: 12px 16px;
+	cursor: pointer;
+	border-radius: 20px; /* Controls the size of the corner area */
+	corner-shape: squircle;
+	border: 1px solid var(--border-color);
+}
