@@ -1,45 +1,78 @@
 "use client";
 
-import { motion, useScroll } from "motion/react";
-import { useRef } from "react";
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
+import { useRef, useState } from "react";
+
+// Constants
+const MAX_TRANSLATE_PERCENT = 100;
+const TRANSLATE_MULTIPLIER = 1.2;
+const LIGHTNESS_OFFSET = 25;
+const RIGHT_OFFSET = "-100%";
 
 function Item() {
+	const [yProgress, setYProgress] = useState(0);
 	const ref = useRef(null);
 	const { scrollYProgress } = useScroll({
 		target: ref,
 		offset: ["end end", "start start"],
 	});
 
+	useMotionValueEvent(scrollYProgress, "change", (latest) => {
+		setYProgress(latest);
+	});
+
+	// Calculate horizontal translation percentage
+	const calculateTranslateX = (progress: number): string => {
+		const calculatedPercent = progress * TRANSLATE_MULTIPLIER * 100;
+		return calculatedPercent >= MAX_TRANSLATE_PERCENT
+			? `-${MAX_TRANSLATE_PERCENT}%`
+			: `-${calculatedPercent}%`;
+	};
+
 	return (
 		<section style={itemContainer}>
+			<svg
+				style={progressIcon}
+				width="75"
+				height="75"
+				viewBox="0 0 100 100"
+				aria-label="Scroll progress indicator"
+			>
+				<circle
+					style={progressIconBg}
+					cx="50"
+					cy="50"
+					r="30"
+					pathLength="1"
+					className="bg"
+				/>
+				<motion.circle
+					cx="50"
+					cy="50"
+					r="30"
+					pathLength="1"
+					style={{
+						...progressIconIndicator,
+						pathLength: scrollYProgress,
+					}}
+				/>
+			</svg>
 			<div ref={ref} style={item}>
-				<figure style={progressIconContainer}>
-					<svg
-						style={progressIcon}
-						width="75"
-						height="75"
-						viewBox="0 0 100 100"
-					>
-						<circle
-							style={progressIconBg}
-							cx="50"
-							cy="50"
-							r="30"
-							pathLength="1"
-							className="bg"
-						/>
-						<motion.circle
-							cx="50"
-							cy="50"
-							r="30"
-							pathLength="1"
-							style={{
-								...progressIconIndicator,
-								pathLength: scrollYProgress,
-							}}
-						/>
-					</svg>
-				</figure>
+				<motion.div
+					animate={{
+						backgroundColor: `hsl( from var(--secondary-color) h s ${100 - yProgress * LIGHTNESS_OFFSET}% )`,
+					}}
+					style={{
+						position: "absolute",
+						top: 0,
+						right: RIGHT_OFFSET,
+						width: "200%",
+						height: "100%",
+						zIndex: 10,
+						translateX: calculateTranslateX(yProgress),
+					}}
+					aria-hidden="true"
+				></motion.div>
 			</div>
 		</section>
 	);
@@ -48,13 +81,6 @@ function Item() {
 export default function TrackElementWithinViewport() {
 	return (
 		<>
-			<Item />
-			<Item />
-			<Item />
-			<Item />
-			<Item />
-			<Item />
-			<Item />
 			<Item />
 			<Item />
 			<Item />
@@ -76,15 +102,6 @@ const itemContainer: React.CSSProperties = {
 	alignItems: "center",
 };
 
-const progressIconContainer: React.CSSProperties = {
-	position: "sticky",
-	top: 0,
-	width: 80,
-	height: 80,
-	margin: 0,
-	padding: 0,
-};
-
 const processCircle: React.CSSProperties = {
 	strokeDashoffset: 0,
 	strokeWidth: 5,
@@ -94,7 +111,7 @@ const processCircle: React.CSSProperties = {
 const progressIcon: React.CSSProperties = {
 	...processCircle,
 	transform: "translateX(-100px) rotate(-90deg)",
-	stroke: "#ff0088",
+	stroke: "var(--secondary-hover)",
 };
 
 const progressIconIndicator: React.CSSProperties = {
@@ -109,8 +126,9 @@ const progressIconBg: React.CSSProperties = {
 };
 
 const item: React.CSSProperties = {
-	width: 200,
-	height: 250,
-	border: "2px dotted #ff0088",
+	width: 270,
+	height: 370,
+	overflow: "hidden",
+	border: "2px dashed var(--secondary-hover)",
 	position: "relative",
 };

@@ -9,7 +9,8 @@ export function FramerWrap() {
 	const ref = useRef(null);
 	const isInView = useInView(ref, {
 		once: false,
-		margin: "-200px 0px -100px 0px",
+		margin: "-25% 0px -10% 0px",
+		amount: 0.3,
 	});
 
 	// Calculate diagonal wave order for 4x4 grid
@@ -24,7 +25,12 @@ export function FramerWrap() {
 		const diagonalIndex = getDiagonalOrder(index, 4);
 		return {
 			initial: { opacity: 0, skewY: 0.8, y: 10, x: 10, duration: 0.3 },
-			animate: { opacity: 1, skewY: 0, y: 0, x: 0 },
+			animate: {
+				opacity: isInView ? 1 : 0,
+				skewY: isInView ? 0 : 0.8,
+				y: isInView ? 0 : 10,
+				x: isInView ? 0 : 10,
+			},
 			transition: {
 				duration: 0.3,
 				delay: 0.1 * diagonalIndex,
@@ -38,6 +44,8 @@ export function FramerWrap() {
 		<div
 			style={{
 				position: "relative",
+				maxWidth: "640px",
+				margin: "0 auto",
 			}}
 		>
 			<motion.div
@@ -48,18 +56,17 @@ export function FramerWrap() {
 				}}
 			></motion.div>
 			<motion.div className="framer-wrap" ref={ref}>
-				{isInView &&
-					ITEMS.map((item, index) => {
-						const animProps = getAnimationProps(index);
-						return (
-							<motion.div
-								key={item.id}
-								className="framer-content"
-								{...animProps}
-								viewport={{ once: false }}
-							></motion.div>
-						);
-					})}
+				{ITEMS.map((item, index) => {
+					const animProps = getAnimationProps(index);
+					return (
+						<motion.div
+							key={item.id}
+							className="framer-content"
+							{...animProps}
+							viewport={{ once: false }}
+						></motion.div>
+					);
+				})}
 			</motion.div>
 		</div>
 	);
